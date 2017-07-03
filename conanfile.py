@@ -4,7 +4,7 @@ import os
 
 class BoostConan(ConanFile):
     name = "boost"
-    version = "1.64.0"
+    version = "1.64.0_1"
     license = "BSL"
     url = "http://boost.org"
     settings = "os", "compiler", "build_type", "arch"
@@ -16,14 +16,13 @@ class BoostConan(ConanFile):
     def source(self):
         tools.download("https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.zip",
                        "boost.zip")
-        tools.unzip("boost.zip")
+        tools.unzip("boost.zip", keep_permissions=True)
         os.remove("boost.zip")
 
     def build(self):
         vcvars = ""
         bootstrap = "./bootstrap.sh"
         if self.settings.os == "Windows":
-            #vcvars = "&&" + tools.vcvars_command(self.settings)
             bootstrap = "bootstrap"
 
         self.run("cd boost_1_64_0 && {vcvars}{bootstrap}".format(vcvars=vcvars, bootstrap=bootstrap))
