@@ -5,7 +5,7 @@ import os
 
 class BoostConan(ConanFile):
     name = "boost"
-    version = "1.64.0_2"
+    version = "1.64.0_3"
     license = "BSL"
     url = "http://boost.org"
     settings = "os", "compiler", "build_type", "arch"
@@ -13,7 +13,7 @@ class BoostConan(ConanFile):
     default_options = "shared=False"
     generators = "cmake"
     short_paths = True
-    ios_archs = ("armv7", "arm64", "x86_64", "i386")
+    ios_archs = ("arm64", "x86_64")
     requires = "multibuilder/1.0@hi3c/experimental"
 
     def source(self):
@@ -89,7 +89,7 @@ class BoostConan(ConanFile):
         with open(os.path.join(self.conanfile_directory, "boost-compiler"), "w") as bcomp:
             bcomp.write("#!/bin/sh\n{cxx} $@ {cflags}\n".format(cxx=os.environ.get("CXX", "c++"), cflags=" ".join(flags)))
 
-        os.chmod(os.path.join(self.conanfile_directory, "boost-compiler"), 0755)
+        os.chmod(os.path.join(self.conanfile_directory, "boost-compiler"), 0o755)
 
         return compiler
 

@@ -8,7 +8,6 @@ username = os.getenv("CONAN_USERNAME", "hi3c")
 
 class BoostTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "boost/1.64.0_1@%s/%s" % (username, channel)
     generators = "cmake"
 
     def build(self):
